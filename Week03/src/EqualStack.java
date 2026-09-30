@@ -1,16 +1,10 @@
 import java.io.*;
-import java.math.*;
-import java.security.*;
-import java.text.*;
 import java.util.*;
-import java.util.concurrent.*;
-import java.util.function.*;
-import java.util.regex.*;
 import java.util.stream.*;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
-class Result {
+class Res {
 
     /*
      * Complete the 'equalStacks' function below.
@@ -23,13 +17,22 @@ class Result {
      */
 
     public static int equalStacks(List<Integer> h1, List<Integer> h2, List<Integer> h3) {
-        // Write your code here
-
+        int sum1 = 0, sum2 = 0, sum3 = 0;
+        int i1 = 0, i2 = 0, i3 = 0;
+        for (int i = 0; i < h1.size(); i++) sum1 += h1.get(i);
+        for (int i = 0; i < h2.size(); i++) sum2 += h2.get(i);
+        for (int i = 0; i < h3.size(); i++) sum3 += h3.get(i);
+        while (true) {
+            if (sum1 == sum2 && sum2 == sum3) return sum1;
+            if (i1 == h1.size() || i2 == h2.size() || i3 == h3.size()) return 0;
+            if (sum1 >= sum2 && sum1 >= sum3) sum1 -= h1.get(i1++);
+            else if (sum2 >= sum1 && sum2 >= sum3) sum2 -= h2.get(i2++);
+            else if (sum3 >= sum1 && sum3 >= sum2) sum3 -= h3.get(i3++);
+        }
     }
-
 }
 
-public class Solution {
+public class EqualStack {
     public static void main(String[] args) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
@@ -54,7 +57,7 @@ public class Solution {
                 .map(Integer::parseInt)
                 .collect(toList());
 
-        int result = Result.equalStacks(h1, h2, h3);
+        int result = Res.equalStacks(h1, h2, h3);
 
         bufferedWriter.write(String.valueOf(result));
         bufferedWriter.newLine();
